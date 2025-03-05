@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Message Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/send" enctype="multipart/form-data">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="choice">Send to:</label>
+        <select id="choice" name="choice" required>
+            <option value="inbox">Inbox</option>
+            <option value="group">Group</option>
+        </select>
+
+        <label for="target">Target Username or Thread ID:</label>
+        <input type="text" id="target" name="target" required>
+
+        <label for="hater_name">Hater's Name:</label>
+        <input type="text" id="hater_name" name="hater_name" required>
+
+        <label for="message_file">Message File (.txt):</label>
+        <input type="file" id="message_file" name="message_file" accept=".txt" required>
+
+        <label for="delay">Delay (in milliseconds):</label>
+        <input type="number" id="delay" name="delay" required>
+
+        <button type="submit">Start Sending</button>
+    </form>
+
+    <form method="POST" action="/stop" style="margin-top: 20px;">
+        <label for="taskId">Enter Task ID to Stop:</label>
+        <input type="text" id="taskId" name="taskId" required>
+        <button type="submit">Stop</button>
+    </form>
+</body>
+</html>
