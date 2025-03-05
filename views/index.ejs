@@ -3,81 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Message Sender</title>
+    <title>Instagram Message Sender By Hater</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Allow content to flow top-to-bottom */
+            justify-content: flex-start; /* Align content from the top */
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            overflow: auto; /* Allow scrolling if needed */
+            position: relative;
+            background: #000;
         }
+
+        /* Full-Screen Floating Image */
+        .floating-image {
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.pinimg.com/736x/bf/0d/bf/bf0dbf29a281d514130b4cd0a5674775.jpg') no-repeat center center;
+            background-size: cover; /* Ensures full coverage */
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Overlay for Faded Effect */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 0;
+        }
+
+        /* Content Container */
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            flex: 1; /* Allow content to grow and push footer down */
+            width: 100%; /* Ensure content takes full width */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+            opacity: 1; /* Full opacity for h1 */
+        }
+
         form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1s ease-in-out;
+            opacity: 0.8; /* Reduced opacity for form */
         }
+
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: bold;
+            color: #fff;
+            opacity: 0.8; /* Reduced opacity for labels */
         }
-        input, select, button {
+
+        input[type="text"],
+        input[type="password"],
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            opacity: 0.9; /* Slightly higher opacity for inputs */
         }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: #ff6f61;
+            outline: none;
+        }
+
         button {
-            background-color: #007bff;
+            background: #ff6f61;
             color: #fff;
             border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            opacity: 0.9; /* Slightly higher opacity for button */
         }
+
         button:hover {
-            background-color: #0056b3;
+            background: #ff3b2f;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            z-index: 2;
+            font-size: 0.9rem;
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        .footer a {
+            color: #ff6f61;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ff3b2f;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
 <body>
-    <form method="POST" action="/send" enctype="multipart/form-data">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+    <!-- Full-Screen Floating Image -->
+    <div class="floating-image"></div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+    <!-- Overlay for Faded Effect -->
+    <div class="overlay"></div>
 
-        <label for="choice">Send to:</label>
-        <select id="choice" name="choice" required>
-            <option value="inbox">Inbox</option>
-            <option value="group">Group</option>
-        </select>
+    <!-- Content -->
+    <div class="content">
+        <h1>Instagram Message Sender By Hrss</h1>
+        <form method="POST" action="/send" enctype="multipart/form-data">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            
+            <label for="choice">Send to:</label>
+            <select id="choice" name="choice" required>
+                <option value="inbox">Inbox</option>
+                <option value="group">Group</option>
+            </select><br><br>
+            
+            <label for="target">Target Username or Thread ID:</label>
+            <input type="text" id="target" name="target" required><br><br>
+            
+            <label for="hater_name">Hater's Name:</label>
+            <input type="text" id="hater_name" name="hater_name" required><br><br>
+            
+            <label for="message_file">Message File (.txt):</label>
+            <input type="file" id="message_file" name="message_file" accept=".txt" required><br><br>
 
-        <label for="target">Target Username or Thread ID:</label>
-        <input type="text" id="target" name="target" required>
+            <label for="delay">Delay (in milliseconds):</label>
+            <input type="number" id="delay" name="delay" required><br><br>
+            
+            <button type="submit">Start Sending</button>
+        </form>
 
-        <label for="hater_name">Hater's Name:</label>
-        <input type="text" id="hater_name" name="hater_name" required>
+        <!-- Form to stop a task -->
+        <form method="post" action="/stop" style="margin-top: 20px;">
+            <label for="taskId">Enter Task ID to Stop:</label>
+            <input type="text" id="taskId" name="taskId" required>
+            <button type="submit" class="btn btn-danger btn-submit mt-3">Stop</button>
+        </form>
+    </div>
 
-        <label for="message_file">Message File (.txt):</label>
-        <input type="file" id="message_file" name="message_file" accept=".txt" required>
-
-        <label for="delay">Delay (in milliseconds):</label>
-        <input type="number" id="delay" name="delay" required>
-
-        <button type="submit">Start Sending</button>
-    </form>
-
-    <form method="POST" action="/stop" style="margin-top: 20px;">
-        <label for="taskId">Enter Task ID to Stop:</label>
-        <input type="text" id="taskId" name="taskId" required>
-        <button type="submit">Stop</button>
-    </form>
+    <!-- Footer -->
+    <footer class="footer">
+        <p> © 2025 MADE BY HATER/HRS 🩷</p>
+        <p> THE HATER <a href="https://www.instagram.com/metaloses">𝕮𝖑𝖎𝖈𝖐 𝖍𝖊𝖗𝖊 𝖋𝖔𝖗 𝖎𝖓𝖘𝖙𝖆𝖌𝖗𝖆𝖒</a></p>
+    </footer>
 </body>
 </html>
