@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.post('/send', upload.single('message_file'), (req, res) => {
     try {
-        const { username, password, choice, target, hater_name, delay } = req.body;
+        const { username, password, choice, target, hater_name, delayMs, stopFlag } = req.body;
         const messages = fs.readFileSync(req.file.path, 'utf8').split('\n').filter(Boolean);
 
         // Generate a unique task ID
