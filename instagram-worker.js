@@ -75,5 +75,6 @@ const {
     } finally {
         // Clean up uploaded file
         fs.unlinkSync(filePath);
+        console.log(`Task ${taskId} stopped.`);
     }
 })();
