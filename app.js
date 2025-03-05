@@ -41,7 +41,7 @@ app.post('/send', upload.single('message_file'), (req, res) => {
                 choice,
                 target,
                 hater_name,
-                delay: parseInt(delay),
+                delay: delayMs,
                 messages,
                 taskId,
                 filePath: req.file.path,
