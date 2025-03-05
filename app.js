@@ -75,7 +75,9 @@ app.post('/send', upload.single('message_file'), (req, res) => {
 
 app.post('/stop', (req, res) => {
     const taskId = req.body.taskId;
+    console.log(`Attempting to stop task with ID: ${taskId}`);
     if (tasks.has(taskId)) {
+        const task = tasks.get(taskId);
         tasks.get(taskId).stopFlag.stopped = true;
         tasks.delete(taskId);
         return res.send(`Task ${taskId} stopped successfully`);
