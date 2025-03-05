@@ -11,7 +11,6 @@ A tool to send automated messages on Instagram using the Instagram Private API. 
 - **Send Messages to Group**: Automatically send messages to a group chat.
 - **Customizable Delay**: Set a delay (in milliseconds) between messages.
 - **Stop Task**: Stop a running task using a unique task ID.
-- **Beautiful UI**: Animated background and modern design.
 
 ---
 
