@@ -1,0 +1,28 @@
+{
+  "name": "instagram-message-sender",
+  "version": "1.0.0",
+  "description": "A tool to send Instagram messages automatically using Express.js and Instagram Private API.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "instagram",
+    "message-sender",
+    "express",
+    "automation"
+  ],
+  "author": "hzcv",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "instagram-private-api": "^1.45.3",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
