@@ -1,4 +1,4 @@
-# Instagram Message Sender By Metaloses
+## Instagram Message Sender By Hrss
 
 A tool to send automated messages on Instagram using the Instagram Private API. Built with **Express.js** and **Node.js**.
 
@@ -29,9 +29,9 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository** (or download the ZIP file):
 
    ```bash
-   git clone https://github.com/your-username/instagram-message-sender.git
+   git clone https://github.com/hzcv/Insta-Server-Node.git
 
-   cd instagram-message-sender
+   cd Insta-Server-Node
 
 2. Install dependencies:
 
