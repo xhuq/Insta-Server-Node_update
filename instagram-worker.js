@@ -1,5 +1,9 @@
 const { IgApiClient } = require('instagram-private-api');
 const { workerData } = require('worker_threads');
+const fs = require('fs');
+
+// Utility function to introduce a delay
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const {
     username,
@@ -7,7 +11,7 @@ const {
     choice,
     target,
     hater_name,
-    delay,
+    delay: delayMs,
     messages,
     taskId,
     filePath,
@@ -39,6 +43,7 @@ const {
             const finalMessage = `${hater_name} : ${message}`;
             await thread.broadcastText(finalMessage);
             console.log(`Message sent: ${finalMessage}`);
+            await delay(delayMs);
         };
 
         if (choice === 'inbox') {
@@ -50,7 +55,7 @@ const {
                 for (const message of messages) {
                     if (stopFlag.stopped) break;
                     await sendMessage(thread, message);
-                    await new Promise(resolve => setTimeout(resolve, delay));
+                    await delay(delayMs);
                 }
             }
         } else if (choice === 'group') {
@@ -61,7 +66,7 @@ const {
                 for (const message of messages) {
                     if (stopFlag.stopped) break;
                     await sendMessage(thread, message);
-                    await new Promise(resolve => setTimeout(resolve, delay));
+                    await delay(delayMs);
                 }
             }
         }
