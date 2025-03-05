@@ -1,6 +1,5 @@
 const { IgApiClient } = require('instagram-private-api');
 const { workerData } = require('worker_threads');
-const fs = require('fs');
 
 // Utility function to introduce a delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
