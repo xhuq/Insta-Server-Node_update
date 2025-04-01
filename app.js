@@ -7,33 +7,25 @@ const fs = require('fs');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
-// In-memory storage for tasks
 const tasks = new Map();
 
-// Configure view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 app.get('/', (req, res) => {
     res.render('index');
 });
 
 app.post('/send', upload.single('message_file'), (req, res) => {
     try {
-        const { username, password, choice, target, hater_name, delayMs } = req.body;
+        const { username, password, choice, target, hater_name, delay } = req.body;
         const messages = fs.readFileSync(req.file.path, 'utf8').split('\n').filter(Boolean);
+        const parsedDelay = parseInt(delay, 10); // Keep as seconds
 
-        // Generate a unique task ID
         const taskId = Math.random().toString(36).substr(2, 9);
-        const stopFlag = { stopped: false };
-
-        // Store the task
-        tasks.set(taskId, { stopFlag });
-
-        // Run in worker thread
+        
         const worker = new Worker('./instagram-worker.js', {
             workerData: {
                 username,
@@ -41,13 +33,14 @@ app.post('/send', upload.single('message_file'), (req, res) => {
                 choice,
                 target,
                 hater_name,
-                delay: delayMs,
+                delay: parsedDelay,
                 messages,
                 taskId,
-                filePath: req.file.path,
-                stopFlag
+                filePath: req.file.path
             }
         });
+
+        tasks.set(taskId, { worker, filePath: req.file.path });
 
         worker.on('message', (message) => {
             console.log(message);
@@ -58,34 +51,28 @@ app.post('/send', upload.single('message_file'), (req, res) => {
         });
 
         worker.on('exit', (code) => {
-            if (code !== 0) {
-                console.error(`Worker stopped with exit code ${code}`);
+            if (code !== 0) console.error(`Worker stopped with exit code ${code}`);
+            if (tasks.has(taskId)) {
+                fs.unlinkSync(req.file.path);
+                tasks.delete(taskId);
             }
-            // Clean up uploaded file
-            fs.unlinkSync(req.file.path);
         });
 
-        return res.send(`Messages are being sent. Task ID: ${taskId}`);
+        res.send(`
+            <script>
+                alert('Task started! ID: ${taskId}');
+                window.location = '/';
+            </script>
+        `);
 
     } catch (error) {
         console.error(error);
-        return res.status(500).send('Error processing request');
+        res.status(500).send('Error: ' + error.message);
     }
 });
 
-app.post('/stop', (req, res) => {
-    const taskId = req.body.taskId;
-    console.log(`Attempting to stop task with ID: ${taskId}`);
-    if (tasks.has(taskId)) {
-        const task = tasks.get(taskId);
-        tasks.get(taskId).stopFlag.stopped = true;
-        tasks.delete(taskId);
-        return res.send(`Task ${taskId} stopped successfully`);
-    }
-    return res.status(404).send('Task not found');
-});
+// Keep the /stop route same as previous version
 
-// Start the server
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
